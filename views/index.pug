@@ -1,0 +1,62 @@
+extends layout.pug
+
+block scripts
+    script var APP_URL = "#{APP_URL}";
+    script(src="/socket.io/socket.io.js")
+    script(src="/public/js/socket.js")
+
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js" crossorigin="anonymous")
+    script(src="/public/js/autocomplete.js")
+
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/highstock/5.0.9/highstock.js" crossorigin="anonymous")
+    script(src="/public/js/highstock.js")
+    style.
+        .item {
+            padding: 0 5px 0 0;
+            margin-bottom: 5px;
+            border-left: 5px solid white;
+        }
+        .item .inner {
+            position: relative;
+            background-color: white;
+            padding: 5px 5px 5px 10px;
+        }
+        .js-delete {
+            position: absolute;
+            right: 5px;
+            top: 25%;
+            cursor: pointer;
+            color: #eee;
+        }
+        .item:hover .js-delete {
+            color: inherit;
+        }
+
+block content
+
+    br
+    div(class="jumbotron container")
+        div(id="container" style="height: 400px; min-width: 310px")
+
+        br
+        div(id="list")
+            for item in stocks
+                div(class="col-xs-4 item" data-symbol=item.symbol)
+                    div(class="inner")
+                        label #{item.label}
+                        small &nbsp;(#{item.symbol})
+                        span(class="js-delete glyphicon glyphicon-remove")
+        
+        script(type="text/tpl" id="list_item")
+            div(class="col-xs-4 item" data-symbol="{{symbol}}")
+                div(class="inner")
+                    label {{label}}
+                    small &nbsp;({{symbol}})
+                    span(class="js-delete glyphicon glyphicon-remove")
+
+    div(class="container")
+        div(class="input-group")
+            input(class="form-control js-autocomplete" placeholder="Stock symbol" autocomplete="off")
+            div(class="input-group-btn")
+                button(type="button" class="btn btn-default js-add") Add
