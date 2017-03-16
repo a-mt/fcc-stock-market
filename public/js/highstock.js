@@ -10,10 +10,12 @@ var Chart = {
             url: "/stocks",
             success: function(data){
                 data = JSON.parse(data);
-               if(!data.Elements) {
-                   return;
-               } 
-               Chart.draw(data);
+                if(!data.Elements) {
+                    $('#container').text('Nothing to display. Add stocks below');
+                    return;
+                }
+                var series = Chart.formatData(data);
+                Chart.draw(series);
             }
         });
     },
@@ -48,8 +50,7 @@ var Chart = {
     },
 
     // Draw the retrieved datas
-    draw: function(data) {
-        var series = Chart.formatData(data);
+    draw: function(series) {
 
         // Draw the chart
         Chart.chart = Highcharts.stockChart('container', {
@@ -74,10 +75,12 @@ var Chart = {
 
     // Add a new line to the chart
     addLine: function(data) {
+        var series = Chart.formatData(data);
+
         if(!Chart.chart) {
+            Chart.draw(series);
             return;
         }
-        var series = Chart.formatData(data);
 
         // Add line
         for(let i=0; i<series.length; i++) {

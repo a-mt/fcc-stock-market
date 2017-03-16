@@ -10,7 +10,7 @@ var MarketDataHandler = function(){
 
         if(input) {
             http.get("http://dev.markitondemand.com/MODApis/Api/v2/Lookup/json?input=" + input, function(subres) {
-                
+
                 if(subres.statusCode != 200) {
                     res.status(subres.statusCode).send(subres.statusMessage);
                 } else {
@@ -112,7 +112,7 @@ function queryChartData(stocks, cb) {
            Params: ["c"]
         });
     }
-    if(!elems) {
+    if(!elems.length) {
         cb("{}");
         return;
     }
