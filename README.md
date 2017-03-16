@@ -1,6 +1,8 @@
 # Chart the Stock Market
 
-User Stories :
+Demo on https://stock-market-26443.herokuapp.com/
+
+## User Stories :
 
 * I can add new stocks by their symbol name
 * I can remove stocks
